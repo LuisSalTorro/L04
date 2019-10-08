@@ -1,5 +1,5 @@
-1 watermelon 1 1.99
-2 sauce-bottle 1 6.59
-1 lemon 12 2.39
-2 coke-box 2 20.78 
-1 pineaple 2 1.50
+1 watermelon 1.99
+2 sauce-bottle 6.59
+3 lemon 2.39
+4 coke-box 20.78
+5 pineapple 1.50

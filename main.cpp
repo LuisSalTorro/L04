@@ -1,11 +1,13 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 class SuperMarket{
 private:
-
+    vector<int> item;
+    vector<int> amount;
 public:
     void greeting();
     void menu();
@@ -44,9 +46,29 @@ void SuperMarket::menu()
 {
     string menu = read_datafile();
     cout << menu << endl;
-    cout << "What items do you want to buy?" <<endl;
+    cout << "What items do you want to buy (1-5)?" <<endl;
 
-    //extract price from back of the line by figring out first empty space
+    bool repeat = true;
+    while (repeat)
+    {
+        int input;
+        cin >> input;
+        item.push_back(input);
+
+        cout << "how many of this item do you want to buy" << endl;
+        cin >> input;
+        amount.push_back(input);
+
+        string input2;
+        cout << "would you like to buy another item (y/n)" << endl;
+        cin >> input2;
+        if (input2 == "n")
+            repeat = false;
+        else
+            cout << "What items do you want to buy (1-5)?" <<endl;
+    }
+
+    //extract price from back of the line by figuring out first empty space
 
 }
 
@@ -68,8 +90,6 @@ string SuperMarket::read_datafile()
 
     in_stream >> menuList;
 
-
-    //cout << menuList << endl;
     string tempStr;
     while(std::getline(in_stream,tempStr)){
         menuList += tempStr +="\n";
