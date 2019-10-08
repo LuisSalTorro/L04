@@ -10,12 +10,13 @@ private:
     vector<int> item;
     vector<int> amount;
     vector<string> menuArray;
+    vector<double> price;
 public:
     void greeting();
     void menu();
     void bill(int bill);
     void printInvoice();
-    string read_datafile();
+    void read_datafile();
     void print_receipt();
 };
 
@@ -47,10 +48,7 @@ void SuperMarket::greeting()
 
 void SuperMarket::menu()
 {
-    string menu = read_datafile(), tempPrice, line;
-    double price = 0;
-    size_t prev = 0, pos = 0;
-    cout << menu << endl;
+    read_datafile();
     cout << "What items do you want to buy (1-5)?" <<endl;
 
     bool repeat = true;
@@ -63,12 +61,6 @@ void SuperMarket::menu()
         cout << "how many of this item do you want to buy" << endl;
         cin >> input;
         amount.push_back(input);
-        tempPrice = menuArray.at(input-1);
-        prev = tempPrice.length()-1;
-        line = tempPrice;
-        pos = line.find_last_of(' ', prev); //or find_last_of( " ';"), pos
-        tempPrice = line.substr(pos+1, 4);
-        price += atof("tempPrice");
 
         string input2;
         cout << "would you like to buy another item (y/n)" << endl;
@@ -78,15 +70,6 @@ void SuperMarket::menu()
         else
             cout << "What items do you want to buy (1-5)?" <<endl;
     }
-
-    cout << "You spent a total of $" << price << endl;
-    //extract the menu prices
-    //This is how to get the last word in a string
-    //lines need to take in a single line of the text
-//    pos = line.find_last_of(" ';", prev); //or find_last_of( ' ' ), pos
-//    tempPrice = line.substr(prev, pos-prev);
-    //make into double and then add the full price
-    //price += atof("tempPrice");
 }
 
 void SuperMarket::bill(int bill)
@@ -100,22 +83,31 @@ void SuperMarket::printInvoice()
 }
 
 //reads the menu file
-string SuperMarket::read_datafile()
+void SuperMarket::read_datafile()
 {
-    string menuList;
-    ifstream in_stream;
-    in_stream.open("grocery_input.txt");
+    string line; //this will contain the data read from the file
+    ifstream myfile ("grocery_input.txt"); //opening the file.
 
-    in_stream >> menuList;
+    if (myfile.is_open()) //if the file is open
+    {
+        while (!myfile.eof()) //while the end of file is NOT reached
+        {
+            getline(myfile, line); //get one line from the file
+            menuArray.push_back(line);
+        }
 
-    string tempStr;
-    while(std::getline(in_stream,tempStr)){
-        menuList += tempStr +="\n";
-        menuArray.push_back(tempStr);
+        myfile.close(); //closing the file
     }
 
-    in_stream.close();
-    return menuList;
+    for (int i = 0; i < menuArray.size(); i++)
+    {
+       int pos = 0;
+       line = menuArray.at(i);
+       pos = line.find_first_of(" ");
+       line = line.substr(pos+1, 5);
+       price.push_back(std::stof(line));
+
+    }
 }
 
 void SuperMarket::print_receipt()
