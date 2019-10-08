@@ -2,19 +2,20 @@
 #include <ctime>
 #include <fstream>
 #include <vector>
-#include <cstdlib>
 using namespace std;
 
 class SuperMarket{
 private:
+    string name;
     vector<int> item;
     vector<int> amount;
     vector<string> menuArray;
     vector<double> price;
+    double total = 0;
 public:
     void greeting();
     void menu();
-    void bill(int bill);
+    void bill();
     void printInvoice();
     void read_datafile();
     void print_receipt();
@@ -22,7 +23,6 @@ public:
 
 void SuperMarket::greeting()
 {
-    string name;
     time_t timer;
     tm * time;
     std::time(&timer);
@@ -51,8 +51,12 @@ void SuperMarket::menu()
     read_datafile();
     cout << "What items do you want to buy (1-5)?" <<endl;
 
-    bool repeat = true;
-    while (repeat)
+    for (int i = 0; i < menuArray.size(); i++)
+    {
+        cout << i+1 << ": " << menuArray.at(i) << endl;
+    }
+
+    while (true)
     {
         int input;
         cin >> input;
@@ -66,20 +70,38 @@ void SuperMarket::menu()
         cout << "would you like to buy another item (y/n)" << endl;
         cin >> input2;
         if (input2 == "n")
-            repeat = false;
+            break;
         else
+        {
             cout << "What items do you want to buy (1-5)?" <<endl;
+            for (int i = 0; i < menuArray.size(); i++)
+            {
+                cout << i+1 << ": " << menuArray.at(i) << endl;
+            }
+        }
     }
 }
 
-void SuperMarket::bill(int bill)
+void SuperMarket::bill()
 {
-    //keep track of what the user buys through an array?
+    for (int i = 0; i < item.size(); i++)
+    {
+        price.at(item.at(i)-1) = price.at(item.at(i)-1) * amount.at(i);
+        total += price.at(i);
+    }
 }
 
 void SuperMarket::printInvoice()
 {
+    cout << "Invoice:" << endl;
 
+    for (int i = 0; i < item.size(); i++)
+    {
+        string tempItem = menuArray.at(item.at(i)-1);
+        cout << amount.at(i) << " " << tempItem.substr(0, tempItem.find(" ")) << " " << price.at(item.at(i)-1) << endl;
+    }
+
+    cout << "Total Amount: " << total << endl;
 }
 
 //reads the menu file
@@ -106,19 +128,34 @@ void SuperMarket::read_datafile()
        pos = line.find_first_of(" ");
        line = line.substr(pos+1, 5);
        price.push_back(std::stof(line));
-
     }
 }
 
 void SuperMarket::print_receipt()
 {
-    //I'm thinking of passing the int price from above here for the total
+    ofstream out_stream;
+    out_stream.open(name + "_receipt.txt");
+
+    out_stream << "Receipt:" << endl;
+
+    for (int i = 0; i < item.size(); i++)
+    {
+        string tempItem = menuArray.at(item.at(i)-1);
+        out_stream << amount.at(i) << " " << tempItem.substr(0, tempItem.find(" ")) << " " << price.at(item.at(i)-1) << endl;
+    }
+
+    out_stream << "Total Amount: " << total << endl;
+
+    out_stream.close();
 }
 
 int main ()
 {
-    SuperMarket test;
-    test.greeting();
-    test.menu();
+    SuperMarket market;
+    market.greeting();
+    market.menu();
+    market.bill();
+    market.printInvoice();
+    market.print_receipt();
     return 0;
 }

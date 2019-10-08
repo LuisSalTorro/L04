@@ -14,10 +14,7 @@
     <list default="true" id="8ead9dfe-7e66-4a80-8937-c3a358ff0179" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/L04.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/L04.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/count.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/L04.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/L04.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/grocery_input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/grocery_input.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,6 +75,7 @@
       <workItem from="1570503188127" duration="3219000" />
       <workItem from="1570553903233" duration="4905000" />
       <workItem from="1570561278394" duration="1985000" />
+      <workItem from="1570574526140" duration="3342000" />
     </task>
     <servers />
   </component>
