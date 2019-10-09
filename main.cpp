@@ -56,6 +56,7 @@ void SuperMarket::menu()
         cout << i+1 << ": " << menuArray.at(i) << endl;
     }
 
+    int totalPrice = 0;
     while (true)
     {
         int input;
@@ -68,6 +69,7 @@ void SuperMarket::menu()
 
         string input2;
         cout << "would you like to buy another item (y/n)" << endl;
+
         cin >> input2;
         if (input2 == "n")
             break;
@@ -87,7 +89,8 @@ void SuperMarket::bill()
     for (int i = 0; i < item.size(); i++)
     {
         price.at(item.at(i)-1) = price.at(item.at(i)-1) * amount.at(i);
-        total += price.at(i);
+        //total += price.at(i);
+        total += price.at(item.at(i)-1) * amount.at(i);
     }
 }
 
@@ -98,10 +101,10 @@ void SuperMarket::printInvoice()
     for (int i = 0; i < item.size(); i++)
     {
         string tempItem = menuArray.at(item.at(i)-1);
-        cout << amount.at(i) << " " << tempItem.substr(0, tempItem.find(" ")) << " " << price.at(item.at(i)-1) << endl;
+        cout << amount.at(i) << " " << tempItem.substr(0, tempItem.find(" ")) << " $" << price.at(item.at(i)-1) << endl;
     }
 
-    cout << "Total Amount: " << total << endl;
+    cout << "Total Amount: $" << total << endl;
 }
 
 //reads the menu file
@@ -123,16 +126,17 @@ void SuperMarket::read_datafile()
 
     for (int i = 0; i < menuArray.size(); i++)
     {
-       int pos = 0;
-       line = menuArray.at(i);
-       pos = line.find_first_of(" ");
-       line = line.substr(pos+1, 5);
-       price.push_back(std::stof(line));
+        int pos = 0;
+        line = menuArray.at(i);
+        pos = line.find_first_of(" ");
+        line = line.substr(pos+1, 5);
+        price.push_back(std::stof(line));
     }
 }
 
 void SuperMarket::print_receipt()
 {
+
     ofstream out_stream;
     out_stream.open(name + "_receipt.txt");
 
@@ -141,10 +145,10 @@ void SuperMarket::print_receipt()
     for (int i = 0; i < item.size(); i++)
     {
         string tempItem = menuArray.at(item.at(i)-1);
-        out_stream << amount.at(i) << " " << tempItem.substr(0, tempItem.find(" ")) << " " << price.at(item.at(i)-1) << endl;
+        out_stream << amount.at(i) << " " << tempItem.substr(0, tempItem.find(" ")) << " $" << price.at(item.at(i)-1) << endl;
     }
 
-    out_stream << "Total Amount: " << total << endl;
+    out_stream << "Total Amount: $" << total << endl;
 
     out_stream.close();
 }
